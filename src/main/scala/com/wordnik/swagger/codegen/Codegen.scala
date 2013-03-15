@@ -202,6 +202,7 @@ class Codegen(config: CodegenConfig) {
   def apiToMap(path: String, operation: Operation): Map[String, AnyRef] = {
     var bodyParam: Option[String] = None
     var queryParams = new ListBuffer[AnyRef]
+    var formParams = new ListBuffer[AnyRef]
     val pathParams = new ListBuffer[AnyRef]
     val headerParams = new ListBuffer[AnyRef]
     val bodyParams = new ListBuffer[AnyRef]
@@ -237,6 +238,12 @@ class Codegen(config: CodegenConfig) {
             }
             bodyParam = Some("body")
             bodyParams += params.clone
+          }
+          case "form" => {
+          	params += "paramName" -> config.toVarName(param.name)
+            params += "baseName" -> param.name
+            params += "required" -> param.required.toString
+            formParams += params.clone
           }
           case "path" => {
             params += "paramName" -> config.toVarName(param.name)
@@ -279,7 +286,12 @@ class Codegen(config: CodegenConfig) {
       case 0 =>
       case _ => queryParams.last.asInstanceOf[HashMap[String, String]] -= "hasMore"
     }
-
+    
+    formParams.size match {
+      case 0 =>
+      case _ => formParams.last.asInstanceOf[HashMap[String, String]] -= "hasMore"
+	}
+	
     pathParams.size match {
       case 0 =>
       case _ => pathParams.last.asInstanceOf[HashMap[String, String]] -= "hasMore"
@@ -322,6 +334,7 @@ class Codegen(config: CodegenConfig) {
         "allParams" -> sp,
         "bodyParams" -> bodyParams.toList,
         "pathParams" -> pathParams.toList,
+        "formParams" -> formParams.toList,
         "queryParams" -> queryParams.toList,
         "headerParams" -> headerParams.toList,
         "requiredParams" -> requiredParams.toList,

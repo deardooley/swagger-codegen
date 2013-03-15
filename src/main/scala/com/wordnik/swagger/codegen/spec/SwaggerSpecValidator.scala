@@ -313,6 +313,16 @@ class SwaggerSpecValidator(private val doc: ResourceListing,
                       case _ => // leave it alone
                     }
                   }
+                  case "form" => {
+                    getUpdatedType(validModelNames, dataType) match {
+                      case Some(updatedName) => {
+                        //                      LOGGER.finest("--> updated " + dataType + " to " + updatedName)
+                        !!(p, OPERATION_PARAM, format("%s.%s(form_%s: %s)", apiNameFromPath(api.path), op.nickname, p.name, p.dataType), format("Invalid %s. Best guess: %s", p.dataType, updatedName))
+                        if (fix) p.dataType = updatedName
+                      }
+                      case _ => // leave it alone
+                    }
+                  }
                   case _ =>
                 }
 

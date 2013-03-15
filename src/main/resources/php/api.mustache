@@ -43,9 +43,16 @@ class {{classname}} {
   		$resourcePath = "{{path}}";
   		$resourcePath = str_replace("{format}", "json", $resourcePath);
   		$method = "{{httpMethod}}";
-      $queryParams = array();
-      $headerParams = array();
-
+  		$formParams = array();
+        $queryParams = array();
+        $headerParams = array();
+		
+	  {{#formParams}}
+  		if(${{paramName}} != null) {
+  		  $formParams['{{paramName}}'] = $this->apiClient->toFormValue(${{paramName}});
+  		}
+  		{{/formParams}}
+  		
       {{#queryParams}}
   		if(${{paramName}} != null) {
   		  $queryParams['{{paramName}}'] = $this->apiClient->toQueryValue(${{paramName}});
@@ -70,8 +77,8 @@ class {{classname}} {
         $body = null;
       }
   		$response = $this->apiClient->callAPI($resourcePath, $method,
-  		                                      $queryParams, $body,
-  		                                      $headerParams);
+  		                                      $queryParams, $formParams,
+  		                                      $body, $headerParams);
 
 
       {{#returnType}}

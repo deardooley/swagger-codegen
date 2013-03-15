@@ -71,7 +71,7 @@ public class ApiInvoker {
     }
   }
 
-  public String invokeAPI(String host, String path, String method, Map<String, String> queryParams, Object body, Map<String, String> headerParams) throws ApiException {
+  public String invokeAPI(String host, String path, String method, Map<String, String> queryParams, Map<String, String> formParams, Object body, Map<String, String> headerParams) throws ApiException {
     Client client = getClient(host);
 
     StringBuilder b = new StringBuilder();

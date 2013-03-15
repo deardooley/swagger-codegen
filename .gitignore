@@ -13,6 +13,8 @@ generated-code/*
 *.swp
 *.swo
 
+bin/*-foundation*
+foundation
 /target
 /generated-files
 /nbactions.xml
