@@ -25,7 +25,16 @@ samples/server-generator/node/output/node_modules
 samples/server-generator/scalatra/target
 samples/server-generator/scalatra/output/.history
 
+
 target
 .idea
 .lib
 atlassian-ide-plugin.xml
+
+samples/client/petstore/java/src/main/java/com/wordnik/petstore/api/PetApi.java
+
+samples/client/petstore/java/src/main/java/com/wordnik/petstore/api/StoreApi.java
+
+samples/client/petstore/java/src/main/java/com/wordnik/petstore/api/UserApi.java
+
+swagger-errors.html
